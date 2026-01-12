@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- 🌙 THEME TOGGLE -->
+    <!-- <div class="theme-toggle" onclick="toggleTheme()">🌙</div> -->
+
+    <div class="container">
+        <div class="card-header">
+            <span class="title">QR Generator</span>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                🌙
+            </button>
+        </div>
+
+
+        <p>Enter your text or URL</p><br>
+
+        <input type="text" placeholder="Text or URL" id="qrText">
+
+        <div id="imgBox">
+            <img src="" id="qrImage">
+        </div>
+
+        <!-- 🔄 BUTTON WITH SPINNER -->
+        <button id="generateBtn" onclick="generateQR()">
+            <span class="btn-text">Generate QR Code</span>
+            <span class="spinner"></span>
+        </button>
+
+        <a href="#" class="watch-link">Watch More Videos</a>
+    </div>
+
+    <script>
+        let imgBox = document.getElementById("imgBox");
+        let qrImage = document.getElementById("qrImage");
+        let qrText = document.getElementById("qrText");
+        let btn = document.getElementById("generateBtn");
+
+        // 🌗 Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle("light");
+        }
+
+        // 🔄 Generate QR
+        function generateQR() {
+            if (qrText.value.trim().length === 0) {
+                qrText.classList.add("error");
+                setTimeout(() => qrText.classList.remove("error"), 600);
+                return;
+            }
+
+            btn.classList.add("loading");
+            imgBox.classList.remove("show-img", "success");
+
+            setTimeout(() => {
+                qrImage.src =
+                    "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" +
+                    encodeURIComponent(qrText.value);
+
+                imgBox.classList.add("show-img", "success");
+                btn.classList.remove("loading");
+            }, 1200); // simulate loading
+        }
+    </script>
+
+</body>
+
+</html>
